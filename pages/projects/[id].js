@@ -1,28 +1,6 @@
 // File: pages/projects/[id].js
 
-export async function getStaticPaths() {
-    const projects = await fetch('https://api.flotiq.com/api/v1/content/project?limit=100000', {
-        headers: {
-            'X-AUTH-TOKEN': process.env.FLOTIQ_API_KEY
-        }
-    }).then((result) => result.json());
-
-    return {
-        paths: projects.data.map((project) => ({ params: { id: project.id } })),
-        fallback: false
-    }
-}
-
-export async function getStaticProps({ params }) {
-    const project = await fetch(`https://api.flotiq.com/api/v1/content/project/${params.id}`, {
-        headers: {
-            'X-AUTH-TOKEN': process.env.FLOTIQ_API_KEY
-        }
-    }).then((result) => result.json());
-    return {
-        props: { project: project }
-    }
-}
+import FlotiqApi from '../../lib/api';
 
 export default function Project({ project }) {
     return (
@@ -31,4 +9,19 @@ export default function Project({ project }) {
             <p>{project.description}</p>
         </article>
     )
+}
+
+export async function getStaticPaths() {
+    return {
+        paths: await FlotiqApi.getProjectsIds(),
+        fallback: false
+    }
+}
+
+export async function getStaticProps({ params }) {
+    return {
+        props: {
+            project: await FlotiqApi.getProject(params.id)
+        }
+    }
 }
