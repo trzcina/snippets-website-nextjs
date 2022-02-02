@@ -1,5 +1,5 @@
-// pages/projects/[id].js
-// using auto generated SDK package
+// File: pages/projects/[id].js
+// Using auto generated SDK package
 
 import * as FlotiqUserApi from '../../lib/flotiq-sdk/src/index';
 
