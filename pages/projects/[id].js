@@ -1,3 +1,6 @@
+// pages/projects/[id].js
+// using auto generated SDK package
+
 import * as FlotiqUserApi from '../../lib/flotiq-sdk/src/index';
 
 FlotiqUserApi.ApiClient.instance.authentications['HeaderApiKeyAuth'].apiKey = process.env.FLOTIQ_API_KEY;
