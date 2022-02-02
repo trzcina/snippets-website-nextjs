@@ -1,14 +1,12 @@
 // File: pages/projects/[id].js
-// Using auto generated SDK package
-
-import * as FlotiqUserApi from '../../lib/flotiq-sdk/src/index';
-
-FlotiqUserApi.ApiClient.instance.authentications['HeaderApiKeyAuth'].apiKey = process.env.FLOTIQ_API_KEY;
 
 export async function getStaticPaths() {
-    const projects = await (new FlotiqUserApi.ContentProjectApi().listProject({
-        limit: 1000000
-    }));
+    const projects = await fetch('https://api.flotiq.com/api/v1/content/project?limit=100000', {
+        headers: {
+            'X-AUTH-TOKEN': process.env.FLOTIQ_API_KEY
+        }
+    }).then((result) => result.json());
+
     return {
         paths: projects.data.map((project) => ({ params: { id: project.id } })),
         fallback: false
@@ -16,14 +14,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const project = await (new FlotiqUserApi.ContentProjectApi().getProject(params.id))
-    return {
-        props: {
-            project: {
-                name: project.name,
-                description: project.description
-            }
+    const project = await fetch(`https://api.flotiq.com/api/v1/content/project/${params.id}`, {
+        headers: {
+            'X-AUTH-TOKEN': process.env.FLOTIQ_API_KEY
         }
+    }).then((result) => result.json());
+    return {
+        props: { project: project }
     }
 }
 

@@ -2,21 +2,18 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import * as FlotiqUserApi from "../lib/flotiq-sdk/src";
-
-FlotiqUserApi.ApiClient.instance.authentications['HeaderApiKeyAuth'].apiKey = process.env.FLOTIQ_API_KEY;
 
 export async function getStaticProps() {
 
-    const projectsApi = new FlotiqUserApi.ContentProjectApi();
-    const projects = await projectsApi.listProject({limit: 10});
+    const projects = await fetch('https://api.flotiq.com/api/v1/content/project?limit=100000', {
+        headers: {
+            'X-AUTH-TOKEN': process.env.FLOTIQ_API_KEY
+        }
+    }).then(response => response.json());
 
     return {
         props: {
-            projectsData: projects.data.map((project) => ({
-                id: project.id,
-                name: project.name
-            }))
+            projectsData: projects.data
         }
     }
 }
