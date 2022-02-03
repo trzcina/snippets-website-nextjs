@@ -4,7 +4,10 @@ import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import * as FlotiqUserApi from "../lib/flotiq-sdk/src";
 
-FlotiqUserApi.ApiClient.instance.authentications['HeaderApiKeyAuth'].apiKey = process.env.FLOTIQ_API_KEY;
+FlotiqUserApi
+    .ApiClient.instance
+    .authentications['HeaderApiKeyAuth']
+    .apiKey = process.env.FLOTIQ_API_KEY;
 
 export async function getStaticProps() {
 
@@ -21,8 +24,32 @@ export async function getStaticProps() {
     }
 }
 
+const demoJS = async () => {
+    // Import Your Personal API SDK
+
+    // Configure API
+    FlotiqUserApi
+        .ApiClient.instance
+        .authentications['HeaderApiKeyAuth']
+        .apiKey = process.env.FLOTIQ_API_KEY;
+
+    // Request projects
+    const ProjectsAPI = new FlotiqUserApi.ContentProjectApi();
+    const projects = await ProjectsAPI.listProject({
+        limit: 10
+    });
+
+    console.log(`Projects count: ${projects.count}`);
+    projects.data.map((project) => {
+        console.log(`${project.id}: ${project.name}`);
+    });
+}
 
 export default function Home({ projectsData }) {
+
+    // run plain js demo
+   // demoJS();
+
   return (
       <Layout home>
         <Head>
