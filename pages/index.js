@@ -39,7 +39,7 @@ const demoJS = async () => {
         limit: 10
     });
 
-    console.log(`Projects count: ${projects.count}`);
+    console.log(`Projects count: ${projects.total_count}`);
     projects.data.map((project) => {
         console.log(`${project.id}: ${project.name}`);
     });
