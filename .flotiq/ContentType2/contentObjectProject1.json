@@ -1,0 +1,13 @@
+{
+  "id": "project-429744",
+  "name": "Test project",
+  "slug": "test-project",
+  "status": "public",
+  "gallery": [
+    {
+      "type": "internal",
+      "dataUrl": "/api/v1/content/_media/_media-a2e5e53c-699f-4615-b6c7-368df834c7e8"
+    }
+  ],
+  "description": "Test project content"
+}
