@@ -7,7 +7,7 @@ FlotiqUserApi.ApiClient.instance.authentications['HeaderApiKeyAuth'].apiKey = pr
 
 export async function getStaticPaths() {
     const projects = await (new FlotiqUserApi.ContentProjectApi().listProject({
-        limit: 1000000
+        limit: 10000
     }));
     return {
         paths: projects.data.map((project) => ({ params: { id: project.id } })),
